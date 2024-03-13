@@ -1,18 +1,28 @@
 import { Module } from '@nestjs/common';
-import { AccountController } from 'src/accounts/application/account.controller';
-import { CreateAccountUseCase } from 'src/accounts/domain/use-case/create-account.use-case';
-import { AccountServiceMongo } from 'src/accounts/infrastructure/driven-adapters/account/account.mongo';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AccountsModule } from 'src/accounts/accounts.module';
+import * as dotenv from 'dotenv';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import typeOrmConfig from 'src/config/db/database.config';
+import { AccountController } from 'src/accounts/infrastructure/adapters/primary/http/account.controller';
+
+dotenv.config();
 
 @Module({
-  imports: [],
-  controllers: [AccountController],
-  providers: [
-    AccountServiceMongo,
-    {
-      provide: CreateAccountUseCase,
-      useFactory: (accountServiceMongo: AccountServiceMongo) => new CreateAccountUseCase(accountServiceMongo),
-      inject: [AccountServiceMongo]
-    }
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      cache: true,
+    }),
+    // Database
+    TypeOrmModule.forRootAsync({
+      useFactory: async (configService: ConfigService) =>
+        typeOrmConfig(configService),
+      inject: [ConfigService],
+    }),
+    AccountsModule,
   ],
+  controllers: [AccountController],
+  providers: [],
 })
-export class AppModule { }
+export class AppModule {}
