@@ -27,6 +27,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/clients-app/tsconfig.app.json"
       }
+    },
+    "onboarding-app": {
+      "type": "application",
+      "root": "apps/onboarding-app",
+      "entryFile": "main",
+      "sourceRoot": "apps/onboarding-app/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/onboarding-app/tsconfig.app.json"
+      }
     }
   }
 }
