@@ -5,7 +5,7 @@ import { CreateUserRequestDto } from 'src/onboarding/infrastructure/adapters/htt
 export class CreateUserService {
   //   constructor(private userRepository: UserRepository) {}
 
-  async create(attrs: CreateUserRequestDto) {
+  async createUser(attrs: CreateUserRequestDto) {
     const user = Object.assign(attrs); // le asignamos lo que esta en attrs a lo que esta en user
     return user;
     // return this.userRepository.create(user);

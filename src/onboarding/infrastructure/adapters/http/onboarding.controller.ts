@@ -17,6 +17,6 @@ export class OnboardingController
   async create(
     @Body() body: CreateUserRequestDto,
   ): Promise<CreateUserResponseDto> {
-    return this.createUserService.create(body);
+    return this.createUserService.createUser(body);
   }
 }
